@@ -6,7 +6,7 @@ var http = require('http')
 var PassThrough = require('stream').PassThrough
 
 module.exports = function (opts) {
-  opts = opts {}
+  opts = opts || {}
   var port = opts.port || 9966
   var router = Router()
   router.addRoute('/', function (req, res) {
