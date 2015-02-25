@@ -26,7 +26,7 @@
     "JSONStream": "^0.10.0",
     "leaflet": "^0.7.3",
     "leaflet-default": "^1.0.0",
-    "leaflet-geojson-stream": "0.0.0",
+    "leaflet-stream": "^1.1.1",
     "open": "0.0.5",
     "routes-router": "^4.1.2",
     "ssejson": "^1.2.0"

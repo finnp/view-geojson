@@ -12,4 +12,18 @@ npm install view-geojson -g
 ```sh
 cat feature1.geojson feature2.geojson | view-geojson
 view-geojson < data.ndjson
+view-geojson feature1.geojson
+```
+
+## Programmatic usage
+
+```js
+var viewGeojson = require('view-geojson')
+
+// default opts
+var opts = {
+  port: 9966
+}
+
+objectstream.pipe(viewGeojson(opts))
 ```
