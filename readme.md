@@ -10,9 +10,14 @@ npm install view-geojson -g
 ## Example
 
 ```sh
-cat feature1.geojson feature2.geojson | view-geojson
-view-geojson < data.ndjson
-view-geojson feature1.geojson
+Usage:
+	cat feature1.geojson feature2.geojson | view-geojson
+	view-geojson --app firefox < data.ndjson
+	view-geojson --port 8080 feature1.geojson
+Options:
+	--no-open  -n  Don't try to open the map.
+	--app          App to open the map URL with.
+	--port     -p  Port to listen on.
 ```
 
 ## Programmatic usage
