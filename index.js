@@ -1,3 +1,5 @@
+const {dirname} = require('path')
+const send = require('send')
 var connect = require('connect')
 var path = require('path')
 var fs = require('fs')
@@ -5,19 +7,23 @@ var http = require('http')
 const {Server: WsServer, createWebSocketStream} = require('ws')
 var PassThrough = require('stream').PassThrough
 
+const pathToMapboxGlCss = require.resolve('mapbox-gl/dist/mapbox-gl.css')
+const pathToMapboxGlDist = dirname(pathToMapboxGlCss)
+
+const serve = (router, path, root) => {
+  router.use(path, (req, res, next) => {
+    const {pathname} = new URL(req.url, 'http://foo')
+    send(req, pathname, {root}).pipe(res)
+  })
+}
+
 module.exports = function (opts) {
   opts = opts || {}
   var port = opts.port || 9966
 
   const router = connect()
-  router.use('/bundle.js', (req, res) => {
-    fs.createReadStream(path.join(__dirname, 'bundle.js'))
-      .pipe(res)
-  })
-  router.use('/', (req, res) => {
-    fs.createReadStream(path.join(__dirname, 'index.html'))
-      .pipe(res)
-  })
+  serve(router, '/mapbox', pathToMapboxGlDist)
+  serve(router, '/', __dirname)
 
   const server = http.createServer(router)
   server.listen(port)
