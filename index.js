@@ -1,5 +1,5 @@
 var ssejson = require('ssejson')
-var Router = require('routes-router')
+var connect = require('connect')
 var path = require('path')
 var fs = require('fs')
 var http = require('http')
@@ -8,20 +8,19 @@ var PassThrough = require('stream').PassThrough
 module.exports = function (opts) {
   opts = opts || {}
   var port = opts.port || 9966
-  var router = Router()
-  router.addRoute('/', function (req, res) {
+
+  const router = connect()
+  router.use('/bundle.js', (req, res) => {
+    fs.createReadStream(path.join(__dirname, 'bundle.js'))
+      .pipe(res)
+  })
+  router.use('/', (req, res) => {
     fs.createReadStream(path.join(__dirname, 'index.html'))
       .pipe(res)
   })
 
-  router.addRoute('/bundle.js', function (req, res) {
-    fs.createReadStream(path.join(__dirname, 'bundle.js'))
-      .pipe(res)
-  })
-
   var input = new PassThrough({objectMode: true})
-  
-  router.addRoute('/sse', function (req, res) {
+  router.use('/sse', (req, res) => {
     res.setHeader('Content-Type', 'text/event-stream')
     input
       .pipe(ssejson.serialize())
