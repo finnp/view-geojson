@@ -32,6 +32,7 @@ module.exports = function (opts) {
     })
   })
 
+  input.stop = server.close.bind(server)
   return input
 }
 
