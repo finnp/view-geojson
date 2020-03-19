@@ -1,0 +1,11 @@
+# editorconfig.org
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+
+[**.{js, json, html}]
+indent_style = spaces
+indent_size = 2
