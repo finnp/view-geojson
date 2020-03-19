@@ -1,8 +1,8 @@
-var ssejson = require('ssejson')
 var connect = require('connect')
 var path = require('path')
 var fs = require('fs')
 var http = require('http')
+const {Server: WsServer, createWebSocketStream} = require('ws')
 var PassThrough = require('stream').PassThrough
 
 module.exports = function (opts) {
@@ -19,14 +19,18 @@ module.exports = function (opts) {
       .pipe(res)
   })
 
+  const server = http.createServer(router)
+  server.listen(port)
+  const wsServer = new WsServer({server})
+
   var input = new PassThrough({objectMode: true})
-  router.use('/sse', (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream')
-    input
-      .pipe(ssejson.serialize())
-      .pipe(res)
+  wsServer.on('connection', (ws) => {
+    const sink = createWebSocketStream(ws)
+    input.pipe(sink)
+    sink.once('close', () => {
+      input.unpipe(sink)
+    })
   })
-  http.createServer(router).listen(port)
 
   return input
 }

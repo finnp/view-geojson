@@ -3,7 +3,6 @@
 var viewGeojson = require('./')
 const mri = require('mri')
 const pkg = require('./package.json')
-var json = require('JSONStream')
 var open = require('open')
 var fs = require('fs')
 

@@ -30,5 +30,5 @@ var opts = {
   port: 9966
 }
 
-objectstream.pipe(viewGeojson(opts))
+stream.pipe(viewGeojson(opts))
 ```

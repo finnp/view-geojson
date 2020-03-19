@@ -33,14 +33,14 @@
   },
   "homepage": "https://github.com/finnp/view-geojson",
   "dependencies": {
-    "JSONStream": "^0.10.0",
     "connect": "^3.7.0",
     "leaflet": "^0.7.3",
     "leaflet-default": "^1.0.0",
     "leaflet-stream": "^1.1.0",
     "mri": "^1.1.4",
+    "ndjson": "^1.5.0",
     "open": "^7.0.3",
-    "ssejson": "^1.2.0"
+    "ws": "^7.2.3"
   },
   "devDependencies": {
     "browserify": "^16.5.0"
