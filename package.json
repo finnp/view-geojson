@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/finnp/view-geojson",
   "dependencies": {
+    "@turf/bbox": "^6.0.1",
     "connect": "^3.7.0",
     "lodash.pick": "^4.4.0",
     "mapbox-gl": "^1.8.1",

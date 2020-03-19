@@ -1,5 +1,6 @@
 const {parse} = require('ndjson')
 const pick = require('lodash.pick')
+const bbox = require('@turf/bbox').default
 
 const wsUrl = new URL(location.href)
 wsUrl.protocol = 'ws'
@@ -85,6 +86,12 @@ map.once('load', () => {
 			}
 		}
 		map.getSource('data').setData(data)
+
+		const [west, south, east, north] = bbox(item)
+		map.fitBounds([[west, south], [east, north]], {
+			padding: Math.min(window.innerWidth, window.innerHeight) / 6 | 0,
+			maxZoom: 18,
+		})
 	})
 })
 
