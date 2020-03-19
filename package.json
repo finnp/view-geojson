@@ -34,12 +34,12 @@
   "homepage": "https://github.com/finnp/view-geojson",
   "dependencies": {
     "connect": "^3.7.0",
-    "leaflet": "^0.7.3",
-    "leaflet-default": "^1.0.0",
-    "leaflet-stream": "^1.1.0",
+    "lodash.pick": "^4.4.0",
+    "mapbox-gl": "^1.8.1",
     "mri": "^1.1.4",
     "ndjson": "^1.5.0",
     "open": "^7.0.3",
+    "send": "^0.17.1",
     "ws": "^7.2.3"
   },
   "devDependencies": {
