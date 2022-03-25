@@ -6,6 +6,7 @@ var fs = require('fs')
 var http = require('http')
 const {Server: WsServer, createWebSocketStream} = require('ws')
 var PassThrough = require('stream').PassThrough
+const peek = require('peek-stream')
 
 const pathToMapboxGlCss = require.resolve('mapbox-gl/dist/mapbox-gl.css')
 const pathToMapboxGlDist = dirname(pathToMapboxGlCss)
@@ -20,6 +21,7 @@ const serve = (router, path, root) => {
 module.exports = function (opts) {
   opts = opts || {}
   var port = opts.port || 9966
+  const openBrowser = opts.openBrowser || (() => {})
 
   const router = connect()
   serve(router, '/mapbox', pathToMapboxGlDist)
@@ -29,8 +31,18 @@ module.exports = function (opts) {
   server.listen(port)
   const wsServer = new WsServer({server})
 
-  var input = new PassThrough({objectMode: true})
+  const passthrough = new PassThrough({objectMode: true})
+	const input = peek({maxBuffer: 1}, (data, swap) => {
+		if (data.length === 0) { // received no data before end
+			input.stop()
+		} else { // there is data
+			openBrowser()
+		}
+		swap(null, passthrough)
+	})
+
   wsServer.on('connection', (ws) => {
+
     const sink = createWebSocketStream(ws)
     input.pipe(sink)
     sink.once('close', () => {

@@ -27,7 +27,7 @@ const style = {
 		type: 'raster',
 		source: 'osm',
 		minzoom: 0,
-		maxzoom: 19
+		maxzoom: 22,
 	}]
 }
 
@@ -46,8 +46,8 @@ map.once('load', () => {
 		type: 'fill',
 		source: 'data',
 		paint: {
-			'fill-color': '#51A7FF',
-			'fill-opacity': .4,
+			'fill-color': ['coalesce', ['get', 'fill-color'], '#51A7FF'],
+			'fill-opacity': ['coalesce', ['get', 'fill-opacity'], .4],
 		},
 		filter: ['!=', '$type', 'Point'],
 	})
@@ -56,9 +56,9 @@ map.once('load', () => {
 		type: 'line',
 		source: 'data',
 		paint: {
-			'line-color': '#5892E8',
-			'line-opacity': .7,
-			'line-width': 1,
+			'line-color': ['coalesce', ['get', 'line-color'], '#5892E8'],
+			'line-opacity': ['coalesce', ['get', 'line-opacity'], .7],
+			'line-width': ['coalesce', ['get', 'line-width'], 1],
 		},
 		filter: ['!=', '$type', 'Point'],
 	})
@@ -67,8 +67,8 @@ map.once('load', () => {
 		type: 'circle', // todo: symbol
 		source: 'data',
 		paint: {
-			'circle-radius': 6,
-			'circle-color': '#5892E8',
+			'circle-radius': ['coalesce', ['get', 'circle-radius'], 6],
+			'circle-color': ['coalesce', ['get', 'circle-color'], '#5892E8'],
 		},
 		filter: ['==', '$type', 'Point'],
 	})
