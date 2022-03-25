@@ -27,7 +27,7 @@ const style = {
 		type: 'raster',
 		source: 'osm',
 		minzoom: 0,
-		maxzoom: 19
+		maxzoom: 22,
 	}]
 }
 
